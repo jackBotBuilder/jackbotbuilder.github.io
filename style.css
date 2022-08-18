@@ -12,6 +12,6 @@ h1 {
 .colorful {
     color: orange;
 }
-header {
+#wrapper {
     background-image: linear-gradient(to bottom right, red, yellow);   
 }
