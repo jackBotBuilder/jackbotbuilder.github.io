@@ -9,9 +9,7 @@ h1 {
 #intro {
     font-size: 1.3em;
 }
-.colorful {
-    color: orange;
-}
-#wrapper {
+
+.wrapper {
     background-image: linear-gradient(to bottom right, red, yellow);   
 }
