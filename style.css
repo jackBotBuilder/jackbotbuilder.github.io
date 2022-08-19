@@ -4,7 +4,7 @@ body {
     font-size: 1.1em;
 }
 h1 {
-    color: coral;
+    color: brown;
 }
 #intro {
     font-size: 1.3em;
@@ -12,6 +12,11 @@ h1 {
 
 ul.navmenu {
     background-color: brown;
+}
+
+ul.navmenu li{
+    background-color: 
+
 }
 
 #a {
