@@ -30,7 +30,7 @@ ul.navmenu li{
 
 menu {
     background-color: brown;
-
+    display: flex;
 }
 
 img {
