@@ -19,6 +19,7 @@ ul.navmenu {
 ul.navmenu li{
     background-color: red;
     list-style-type: none;
+    margin: 10px;
     text-decoration: none;
 }
 
