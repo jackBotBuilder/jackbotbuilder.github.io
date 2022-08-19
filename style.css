@@ -12,6 +12,7 @@ h1 {
 
 ul.navmenu {
     background-color: brown;
+    display: flex;
 }
 
 ul.navmenu li{
