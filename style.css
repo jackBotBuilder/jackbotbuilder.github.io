@@ -24,6 +24,10 @@ ul.navmenu li{
 
 }
 
+img {
+    margin: 4px;
+}
+
 a:visited {
             color: cyan;
          }
