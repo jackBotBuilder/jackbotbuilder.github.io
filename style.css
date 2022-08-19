@@ -18,3 +18,7 @@ h1 {
     color: red;
 
 }
+
+a:visited {
+            color: #FF0000
+         }
