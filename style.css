@@ -28,6 +28,11 @@ ul.navmenu li{
 
 }
 
+menu {
+    background-color: brown;
+
+}
+
 img {
     margin: 4px;
     text-align: left;
