@@ -10,8 +10,8 @@ h1 {
     font-size: 1.3em;
 }
 
-.wrapper {
-    background-image: linear-gradient(to bottom right, brown, brown);   
+ul.navmenu {
+    background-color: brown;
 }
 
 #a {
