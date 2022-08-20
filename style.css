@@ -12,8 +12,7 @@ h1 {
 
 ul.navmenu {
     background-color: brown;
-    /*display: flex;*/
-    /*justify-content: center;*/
+
 }
 
 
@@ -26,8 +25,7 @@ menu {
     background-color: brown;
     display: flex;
 }*/
-
-menulinks {
+ul.menulinks {
     display: flex;
     justify-content: center;
     background-color: red;
