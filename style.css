@@ -12,16 +12,10 @@ h1 {
 
 ul.navmenu {
     background-color: brown;
-    display: flex;
-    justify-content: center;
+    /*display: flex;*/
+    /*justify-content: center;*/
 }
 
-ul.navmenu li{
-    background-color: red;
-    list-style-type: none;
-    margin: 10px;
-    text-decoration: none;
-}
 
 #a {
     color: red;
@@ -32,6 +26,15 @@ menu {
     background-color: brown;
     display: flex;
 }*/
+
+menulinks {
+    display: flex;
+    justify-content: center;
+    background-color: red;
+    list-style-type: none;
+    margin: 10px;
+    text-decoration: none;
+}
 
 img {
     margin: 4px;
