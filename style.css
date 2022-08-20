@@ -11,9 +11,9 @@ body {
   background-color: #f1f1f1;
   padding: 20px 10px;
 }
-/*
+
 .header a {
-  float: left;
+  float: center;
   color: black;
   text-align: center;
   padding: 12px;
@@ -21,7 +21,7 @@ body {
   font-size: 18px; 
   line-height: 25px;
   border-radius: 4px;
-}*/
+}
 */
 .header a.logo {
   font-size: 25px;
@@ -34,7 +34,7 @@ body {
 }
 
 .header a.active {
-  background-color: dodgerblue;
+  background-color: lightseagreen;
   color: white;
 }
 
