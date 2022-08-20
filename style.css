@@ -8,7 +8,7 @@ body {
 
 .header {
   overflow: hidden;
-  background-color: #009dff;
+  background-color: #004875;
   padding: 20px 10px;
   
 }
@@ -40,7 +40,7 @@ body {
 }
 
 .header-right {
-  float: center;
+  float: right;
 }
 
 @media screen and (max-width: 500px) {
