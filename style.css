@@ -3,7 +3,7 @@
 body { 
   margin: 0;
   background-color: teal;
-  font-family: "Courier New";
+  font-family:"Helvetica";
 }
 
 .header {
@@ -58,7 +58,7 @@ body {
   }
   .entry p{
   color: #e6ffec;
-  font-family: "Lucida Console", "Courier New", monospace;
+  font-family: "Courier New";
   
   }
   
