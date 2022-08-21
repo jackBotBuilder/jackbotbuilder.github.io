@@ -53,8 +53,7 @@ body {
   .entry {
   background-color: #19211b;
   padding: 30px;
-  
-  
+  display: flex;
   }
   .entrytext{
   color: #e6ffec;
