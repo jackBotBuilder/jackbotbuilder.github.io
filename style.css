@@ -50,10 +50,9 @@ body {
   }
   
   
-  .entry {
+  div {
   background-color: #003d29;
-  padding: 30px;
-  display: flex;
+
   }
 
   
