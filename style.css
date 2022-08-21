@@ -52,9 +52,13 @@ body {
   
   
   .entry {
-  color: #e6ffec;
   background-color: #19211b;
   padding: 30px;
+  
+  
+  }
+  .entry p{
+  color: #e6ffec;
   font-family: "Lucida Console", "Courier New", monospace;
   
   }
