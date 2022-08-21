@@ -50,8 +50,8 @@ body {
   }
   
   
-  .entry {
-  background-color: #19211b;
+  div .entry {
+  background-color: blanchedalmond;
   padding: 30px;
   display: flex;
   }
