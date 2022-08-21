@@ -50,14 +50,10 @@ body {
   }
   
   
-  div {
-  background-color: blanchedalmond;
+  .entry {
+  background-color: #003d29;
   padding: 30px;
   display: flex;
   }
-  .entrytext{
-  color: #e6ffec;
-  font-family: "Courier New";
-  
-  }
+
   
