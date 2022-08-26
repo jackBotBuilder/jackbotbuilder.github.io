@@ -1,7 +1,6 @@
 * {box-sizing: border-box;}
 
 body { 
-  padding: 30px;
   background-color: teal;
   font-family:"Arial";
 }
@@ -72,4 +71,7 @@ body {
   padding: 2px 16px;
 }
 
+  .entry {
+  padding: 30px;
+  }
   
