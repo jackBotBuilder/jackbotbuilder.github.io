@@ -34,7 +34,7 @@ body {
 
 .header a.active {
   background-color: lightseagreen;
-  color: white;
+  /*color: white;*/
 }
 
 .header-right {
