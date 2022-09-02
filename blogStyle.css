@@ -27,6 +27,14 @@ body {
   color: black;
 }
 
+// just a test
+@media screen and (max-width: 500px) {
+  .header a {
+    float: none;
+    display: block;
+    text-align: left;
+  }
+
 .header a.active {
   background-color: lightseagreen;
   color: white;
