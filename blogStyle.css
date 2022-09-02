@@ -1,8 +1,7 @@
 * {box-sizing: border-box;}
 
 body { 
-  background-color: teal;
-  font-family:"Arial";
+  background-color: #002240;
 }
 
 .header {
@@ -47,12 +46,7 @@ body {
     display: block;
     text-align: left;
   }
-  
-  
-  div {
-  background-color: #003d29;
-
-  }
+ 
   
   
   
@@ -71,7 +65,7 @@ body {
   padding: 2px 16px;
 }
 
-  .entry {
-  color: seagreen;
+#entry{
+  color: #FFFFFF;
   padding: 30px;
   }
