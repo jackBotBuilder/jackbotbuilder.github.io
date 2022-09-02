@@ -31,7 +31,7 @@ body {
 // just a test
 @media screen and (max-width: 500px) {
   .header a {
-    float: right;
+    float: left;
     display: block;
     text-align: left;
   }
