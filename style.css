@@ -40,12 +40,7 @@ body {
 .header-right {
   float: right;
 }
-  
-  
-  div {
-  background-color: #003d29;
-
-  }
+ 
   
   @media screen and (max-width: 500px) {
   .header a {
@@ -70,7 +65,7 @@ body {
 }
 
   .entry {
-  color: deeppink;
+  color: white;
   padding: 30px;
   }
   
