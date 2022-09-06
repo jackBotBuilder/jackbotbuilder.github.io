@@ -1,8 +1,9 @@
 * {box-sizing: border-box;}
 
 body { 
-  background-color: teal;
-  font-family:"Arial";
+  background-color: #002240;
+  color: white;
+  font-family:"Courier New";
 }
 
 .header {
