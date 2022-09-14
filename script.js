@@ -1,7 +1,7 @@
 var cssToggle = document.getElementById("cssShift");
 
 function toggle(){
-cssToggle.innerHTML = "Flurkin Kitty";
+document.innerHTML = "Flurkin Kitty";
 
 };
 
