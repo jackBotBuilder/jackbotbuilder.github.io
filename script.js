@@ -4,7 +4,7 @@ var stylesheet = document.getElementById("stylesheet");
 function buttonToggle(){
     if (cssToggle.innerHTML == "Normal Css"){
     cssToggle.innerHTML = "Special Surprise Toggle";
-    stylesheet.href = "styles/style.css";
+    stylesheet.href = "styles/main.css";
     }
     else {
     cssToggle.innerHTML = "Normal Css";
