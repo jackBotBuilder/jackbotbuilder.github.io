@@ -2,7 +2,7 @@ var cssToggle = document.getElementById("cssShift");
 var stylesheet = document.getElementById("stylesheet");
 
 function buttonToggle(){
-    cssToggle.innerHTML = "Flurkin Kitty!!!";
+    cssToggle.innerHTML = "Update 1:";
     stylesheet.href = "styles/alternate.css";
 };
 cssToggle.innerHTML = "Special Suprise Toggle";
