@@ -3,7 +3,7 @@ var stylesheet = document.getElementById("stylesheet");
 
 function buttonToggle(){
     cssToggle.innerHTML = "Flurkin Kitty!!!";
-    stylesheet.href = "styles/other.css";
+    stylesheet.href = "styles/alternate.css";
 };
 cssToggle.innerHTML = "Special Suprise Toggle";
 
