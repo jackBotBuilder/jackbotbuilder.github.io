@@ -8,13 +8,13 @@ body {
 
 .header {
   overflow: hidden;
-  background-color: #4f2b00;
+  background-color: #ffaa2b;
   padding: 20px 10px;
   
 }
 .header a {
   float: center;
-  color: #ffb940;
+  color: #b15eff;
   text-align: center;
   padding: 12px;
   text-decoration: none;
