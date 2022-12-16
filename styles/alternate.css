@@ -29,8 +29,8 @@ body {
 }*/
 
 .header a:hover {
-  background-color: #910005;
-  color: #00360b;
+  background-color: #00360b;
+  color: #910005;
 }
 
 .header a.active {
