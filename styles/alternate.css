@@ -1,20 +1,20 @@
 * {box-sizing: border-box;}
 
 body { 
-  background-color: #4f2b00;
+  background-color: #00360b;
   color: white;
   font-family:"Courier New";
 }
 
 .header {
   overflow: hidden;
-  background-color: #ffaa2b;
+  background-color: #910005;
   padding: 20px 10px;
   
 }
 .header a {
   float: center;
-  color: #b15eff;
+  color: #00360b;
   text-align: center;
   padding: 12px;
   text-decoration: none;
@@ -29,8 +29,8 @@ body {
 }*/
 
 .header a:hover {
-  background-color: #32005e;
-  color: white;
+  background-color: #910005;
+  color: #00360b;
 }
 
 .header a.active {
