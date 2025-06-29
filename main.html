@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<div style="display: flex; justify-content: center;">
+
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Skateboard Motion Game</title>
+  <style>
+    :root {
+      --header-height: 60px;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: black;
+      color: white;
+    }
+    
+    html, body {
+  height: 100%;
+  overflow-y: auto;
+}
+
+.game-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* <-- This is key */
+  justify-content: flex-start;
+  width: 100%;
+  text-align: center;
+  padding-top: var(--header-height);
+  padding-bottom: 40px;
+}
+
+    .controls {
+      margin: 20px 0;
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .controls button {
+      background: blue;
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      cursor: pointer;
+      font-size: 14px;
+      border-radius: 5px;
+    }
+
+    #timer, #score, #level {
+      font-size: 18px;
+      margin-top: 10px;
+      font-weight: bold;
+    }
+
+    .simulation-container {
+      width: 100%;
+      max-width: 400px;
+      overflow: hidden;
+      position: relative;
+      height: 120px;
+      background: linear-gradient(to bottom, #87ceeb 80%, #333 20%);
+    }
+
+    .road {
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      height: 60px;
+      background: #444;
+      z-index: 5;
+    }
+
+    .road-lines {
+      position: absolute;
+      bottom: 20px;
+      width: 4000px;
+      height: 10px;
+      display: flex;
+      gap: 50px;
+    }
+
+    .road-line {
+      width: 50px;
+      height: 4px;
+      background: white;
+    }
+
+    .skater {
+      position: absolute;
+      bottom: 23px;
+      left: 20px;
+      width: 60px;
+      height: auto;
+      z-index: 10;
+    }
+
+    .background {
+      position: absolute;
+      bottom: 50px;
+      width: 4000px;
+      height: 150px;
+      display: flex;
+      gap: 200px;
+    }
+
+    .tree {
+      position: relative;
+      width: 50px;
+    }
+
+    .tree::before {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 15px;
+      height: 60px;
+      background: #8B4513;
+    }
+
+    .tree::after {
+      content: "";
+      position: absolute;
+      bottom: 60px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 60px;
+      height: 60px;
+      background: green;
+      border-radius: 50%;
+    }
+
+    .graph-container {
+      width: 100%;
+      max-width: 600px;
+      margin-top: 0px;
+    }
+    .graph-container canvas {
+     height: 120px;
+     width: 100%;
+    display: block;
+    margin: 20 auto;
+    background: white;
+    border: 1px solid #ccc;
+    }
+
+    .slider-container {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.8);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 100;
+      display: none;
+    }
+
+    .modal-content {
+      background: white;
+      color: black;
+      padding: 20px;
+      border-radius: 10px;
+      text-align: center;
+    }
+
+    .modal-content button {
+      margin-top: 15px;
+      padding: 10px 20px;
+      background: blue;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    .status-bar {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin-top: 10px;
+}
+
+.status-bar div {
+  font-size: 18px;
+  font-weight: bold;
+}
+    /* Compact layout for short/narrow viewports */
+@media (max-height: 600px), (max-width: 400px) {
+  :root { --header-height: 50px; }
+
+  /* Shrink the simulation & graph areas */
+  .simulation-container {
+    height: 100px;
+    max-width: 75%;
+  }
+  .graph-container canvas {
+    height: 100px;
+  }
+
+  /* Reduce text size on stats and buttons */
+  #timer, #score, #level {
+    font-size: 10px;
+    margin-top: 5px;
+  }
+  .controls button {
+    padding: 6px 10px;
+    font-size: 12px;
+  }
+  .slider-container label, 
+  .slider-container span {
+    font-size: 12px;
+  }
+
+  /* Stack controls if there isn’t room */
+  .controls {
+    flex-wrap: wrap;
+    gap: 6px;
+    justify-content: center;
+  }
+
+  /* Tighter spacing around the whole game */
+  .game-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  min-height: auto;
+  width: 100%;
+  text-align: center;
+  padding-top: var(--header-height);
+}
+}
+  </style>
+  
+</head>
+<body>
+    
+  <audio id="retroMusic" src="https://virtualscienceteachers.org/wp-content/uploads/2025/01/fun-retro-game-1-minute-edit-198959.mp3" loop></audio>
+  <audio id="elevatorMusic" src="https://virtualscienceteachers.org/wp-content/uploads/2025/01/vinyl-stop-sound-effect-241388.mp3" loop></audio>
+  <div class="game-container">
+    <p>Match the red line on the graph by adjusting the skateboarder's speed using the slider.<br>There are 10 levels to complete, each with increasing challenges. Unlock higher levels by scoring 8 or higher!<br>Select the "Start Time" button to begin.</p>
+
+<div class="status-bar">
+  <div id="timer">Time: 0s</div>
+  <div id="score">Score: 0</div>
+  <div id="level">Level: 1</div>
+</div>
+
+    <div class="simulation-container">
+      <div class="background" id="background"></div>
+      <div class="road">
+        <div class="road-lines" id="roadLines"></div>
+      </div>
+      <img src="https://virtualscienceteachers.org/wp-content/uploads/2025/01/Slothonaskateboard.png" 
+           alt="Skater" class="skater" id="skater">
+    </div>
+    <div class="graph-container">
+      <canvas id="graph"></canvas>
+    </div>
+    <div class="controls">
+  <button id="resetButton">Reset Level</button>
+  <div class="slider-container">
+    <label for="speedSlider">Speed (m/s):</label>
+    <input type="range" id="speedSlider" min="0" max="5" value="1" step="0.1">
+    <span id="speedDisplay">1</span>
+    <button id="toggleButton">Start Timer</button>
+  </div>
+</div>
+  </div>
+
+  <div class="modal" id="modal">
+    <div class="modal-content" id="modalContent">
+      <h2 id="modalTitle">Congratulations!</h2>
+      <p id="modalMessage">You completed the level. Ready for the next one?</p>
+      <button id="modalButton">Next Level</button>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script>
+    const toggleButton = document.getElementById("toggleButton");
+    const resetButton = document.getElementById("resetButton");
+    const speedSlider = document.getElementById("speedSlider");
+    const speedDisplay = document.getElementById("speedDisplay");
+    const timerDisplay = document.getElementById("timer");
+    const scoreDisplay = document.getElementById("score");
+    const levelDisplay = document.getElementById("level");
+    const roadLines = document.getElementById("roadLines");
+    const background = document.getElementById("background");
+    const modal = document.getElementById("modal");
+    const modalTitle = document.getElementById("modalTitle");
+    const modalMessage = document.getElementById("modalMessage");
+    const modalButton = document.getElementById("modalButton");
+    const retroMusic = document.getElementById("retroMusic");
+    const elevatorMusic = document.getElementById("elevatorMusic");
+    const successMusic = new Audio("https://virtualscienceteachers.org/wp-content/uploads/2025/01/achievement-video-game-type-1-230515.mp3");
+    const failMusic = new Audio("https://virtualscienceteachers.org/wp-content/uploads/2025/01/fail-234710.mp3");
+    const winGameMusic = new Audio("https://virtualscienceteachers.org/wp-content/uploads/2025/01/success-fanfare-trumpets-6185.mp3");
+    
+
+    let time = 0;
+    let score = 0;
+    let level = 1;
+    let speed = parseFloat(speedSlider.value);
+    let isRunning = false;
+    let intervalId = null;
+    let animationId = null;
+
+    let roadLinePosition = 0;
+    let backgroundPosition = 0;
+
+    const chart = new Chart(document.getElementById("graph").getContext("2d"), {
+      type: "line",
+      data: {
+        labels: Array.from({ length: 11 }, (_, i) => i),
+        datasets: [
+          {
+            label: "Your Line",
+            data: [0, ...Array(10).fill(null)],
+            borderColor: "blue",
+            borderWidth: 2,
+            pointRadius: 5,
+            pointBackgroundColor: "blue",
+          },
+          {
+            label: "Target Line",
+            data: generateTargetLine(level),
+            borderColor: "red",
+            borderDash: [5, 5],
+            borderWidth: 2,
+          },
+        ],
+      },
+      options: {
+        responsive: true,
+        animation: false,
+        scales: {
+          x: { title: { display: true, text: "Time (seconds)" }, min: 0, max: 10 },
+          y: { title: { display: true, text: "Distance (meters)" }, min: 0, max: 20 },
+        },
+      },
+    });
+
+    function generateTargetLine(level) {
+      switch (level) {
+        case 1: return Array.from({ length: 11 }, (_, t) => t * 2);
+        case 2: return Array.from({ length: 11 }, (_, t) => Math.min(t < 5 ? t * 2 : 10, 18));
+        case 3: return Array.from({ length: 11 }, (_, t) => Math.min(t < 3 ? t * 3 : t < 6 ? 9 : 9 + (t - 6), 18));
+        case 4: return Array.from({ length: 11 }, (_, t) => (t < 2 ? t : t < 4 ? 2 : t < 7 ? 2 + (t - 4) * 5 : 17));
+         case 5:
+          return Array.from({ length: 11 }, (_, t) => {
+            if (t < 2) return t * 5;
+            if (t < 4) return 10 + (t - 2) * 1;
+            if (t < 6.5) return Math.min(12 + (t - 4) * 4, 18);
+            return 18;
+          });
+
+        case 6:
+          return Array.from({ length: 11 }, (_, t) => {
+            const maxDistance = 18;
+            const totalDistance = (2.5 / 10) * t * t;
+            return Math.min(totalDistance, maxDistance);
+          });
+
+        case 7:
+          return Array.from({ length: 11 }, (_, t) => {
+            const maxDistance = 18;
+            const totalDistance = (5 / 10) * t * t;
+            return Math.min(totalDistance, maxDistance);
+          });
+
+        case 8:
+          return Array.from({ length: 11 }, (_, t) => {
+            const maxDistance = 18;
+            const totalDistance = (5 * t) - (0.25 * t * t);
+            return Math.max(0, Math.min(totalDistance, maxDistance));
+          });
+
+        case 9:
+          return Array.from({ length: 11 }, (_, t) => {
+            if (t < 3) {
+              return 5 * t - 0.5 * (5 / 3) * t * t;
+            } else if (t < 7) {
+              const timeSinceStart = t - 3;
+              return 7.5 + 0.5 * (3 / 4) * timeSinceStart * timeSinceStart;
+            } else {
+              const timeSinceStart = t - 7;
+              return 13.5 + 3 * timeSinceStart - 0.5 * (3 / 3) * timeSinceStart * timeSinceStart;
+            }
+          });
+
+        case 10:
+          return Array.from({ length: 11 }, (_, t) => {
+            if (t < 2) {
+              return 0.5 * 2.5 * t * t;
+            } else if (t < 4) {
+              const timeSinceStart = t - 2;
+              return 5 + 5 * timeSinceStart - 0.5 * 2.5 * timeSinceStart * timeSinceStart;
+            } else if (t < 6) {
+              const timeSinceStart = t - 4;
+              return 10 + 0.5 * 1.5 * timeSinceStart * timeSinceStart;
+            } else if (t < 8) {
+              const timeSinceStart = t - 6;
+              return 13 + 3 * timeSinceStart - 0.5 * 1.5 * timeSinceStart * timeSinceStart;
+            } else {
+              return 20;
+            }
+          });
+
+        // Add more levels as needed
+      }
+    }
+
+    function updateMusic() {
+  if (!isRunning) {
+    retroMusic.pause();
+    elevatorMusic.pause();
+    return;
+  }
+
+  if (speed > 0) {
+    elevatorMusic.pause();
+    retroMusic.play();
+  } else {
+    retroMusic.play();
+    elevatorMusic.pause();
+  }
+}
+
+    function moveElements() {
+      const treeSpeed = speed * 40;
+      const roadSpeed = speed * 80;
+
+      roadLinePosition = (roadLinePosition - roadSpeed * 0.016) % 100;
+      backgroundPosition = (backgroundPosition - treeSpeed * 0.016) % 4000;
+
+      roadLines.style.transform = `translateX(${roadLinePosition}px)`;
+      background.style.transform = `translateX(${backgroundPosition}px)`;
+
+      animationId = requestAnimationFrame(moveElements);
+    }
+
+function startGame() {
+  if (isRunning) return; // Prevent starting the game if it’s already running
+  isRunning = true; // Set the game state to "running"
+  toggleButton.textContent = "Pause Timer"; // Update the button text
+
+  // Start animating the background elements (trees, road lines)
+  moveElements();
+
+  // Safely update the music based on the current speed
+  try {
+    updateMusic(); // Ensure `updateMusic` handles logic correctly
+  } catch (error) {
+    console.error("Error updating music:", error); // Log any music-related errors
+  }
+
+  // Start the interval for game updates (every second)
+  intervalId = setInterval(() => {
+    if (time < 10) { 
+      // Increment the game timer
+      time++;
+
+      // Safely update the graph's blue line (your distance)
+      chart.data.datasets[0].data[time] = 
+        (chart.data.datasets[0].data[time - 1] || 0) + speed;
+
+      // Recalculate the score based on the blue line and the red target line
+      score = calculateScore();
+
+      // Update the on-screen stats (time, score, level)
+      updateStats();
+
+      // Refresh the graph display
+      chart.update();
+    } else {
+      // If the timer reaches 10 seconds, stop the interval and end the game
+      clearInterval(intervalId);
+      endGame(); // Call the `endGame` function
+    }
+  }, 1000); // Set the interval to 1 second
+}
+
+
+   function pauseGame() {
+  isRunning = false;
+  toggleButton.textContent = "Start Timer";
+  cancelAnimationFrame(animationId);
+  clearInterval(intervalId);
+  updateMusic(); // Stop the music
+}
+
+    function resetGame() {
+  pauseGame();
+  time = 0;
+  score = 0;
+  chart.data.datasets[0].data = [0, ...Array(10).fill(null)];
+  chart.update();
+  updateStats();
+  populateBackground();
+  populateRoadLines();
+  updateMusic(); // Ensure music is reset
+}
+
+   function endGame() {
+  pauseGame(); // Pause the game and stop everything
+  toggleButton.textContent = "Start Timer";
+
+  if (score >= 8) {
+    if (level === 10) {
+      // All levels completed
+      modalTitle.textContent = "Congratulations!";
+      modalMessage.textContent = "You completed all levels! Click below to restart.";
+      modalButton.textContent = "Restart Game";
+      modalButton.onclick = () => {
+        level = 1;
+        resetGame();
+        updateTargetLine();
+        modal.style.display = "none";
+      };
+
+      // Play final victory music
+      winGameMusic.currentTime = 0; // Reset track
+      winGameMusic.play().catch((error) => {
+        console.error("Error playing win game music:", error);
+      });
+
+    } else {
+      // Single level passed
+      modalTitle.textContent = "Level Complete!";
+      modalMessage.textContent = `You scored ${score}/10! Proceed to the next level.`;
+      modalButton.textContent = "Next Level";
+      modalButton.onclick = () => {
+        level++;
+        resetGame();
+        updateTargetLine();
+        modal.style.display = "none";
+      };
+
+      // Play level success music
+      successMusic.currentTime = 0; // Reset track
+      successMusic.play().catch((error) => {
+        console.error("Error playing success music:", error);
+      });
+    }
+    modal.style.display = "flex";
+  } else {
+    // Level failed
+    modalTitle.textContent = "Try Again!";
+    modalMessage.textContent = "You didn't score enough. Try again!";
+    modalButton.textContent = "Retry Level";
+    modalButton.onclick = () => {
+      resetGame();
+      modal.style.display = "none";
+    };
+
+    // Play fail music
+    failMusic.currentTime = 0; // Reset track
+    failMusic.play().catch((error) => {
+      console.error("Error playing fail music:", error);
+    });
+
+    modal.style.display = "flex";
+  }
+}
+
+
+    function calculateScore() {
+      const target = chart.data.datasets[1].data;
+      return chart.data.datasets[0].data.reduce((sum, dist, i) => (
+        i > 0 && dist !== null && Math.abs(dist - target[i]) <= 1 ? sum + 1 : sum
+      ), 0); // Ignore 0,0 in score
+    }
+
+    function updateTargetLine() {
+      chart.data.datasets[1].data = generateTargetLine(level);
+      chart.update();
+      updateStats();
+    }
+
+    function updateStats() {
+      timerDisplay.textContent = `Time: ${time}s`;
+      scoreDisplay.textContent = `Score: ${score}`;
+      levelDisplay.textContent = `Level: ${level}`;
+    }
+
+    toggleButton.addEventListener("click", () => (isRunning ? pauseGame() : startGame()));
+    resetButton.addEventListener("click", resetGame);
+    speedSlider.addEventListener("input", () => {
+  speed = parseFloat(speedSlider.value);
+  speedDisplay.textContent = `${speed.toFixed(1)} m/s`;
+  updateMusic(); // Add this line
+});
+
+    function populateBackground() {
+      background.innerHTML = "";
+      for (let i = 0; i < 25; i++) {
+        const tree = document.createElement("div");
+        tree.classList.add("tree");
+        background.appendChild(tree);
+      }
+    }
+
+    function populateRoadLines() {
+      roadLines.innerHTML = "";
+      for (let i = 0; i < 40; i++) {
+        const roadLine = document.createElement("div");
+        roadLine.classList.add("road-line");
+        roadLines.appendChild(roadLine);
+      }
+    }
+    resetGame();
+    
+    
+  </script>
+  
+ 
+
+</body>
+</html>
+</div>
+
+
